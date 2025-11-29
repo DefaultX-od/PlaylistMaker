@@ -27,7 +27,7 @@
                 android:fontFamily="@font/ys_display_bold"
                 android:textSize="22sp"
                 android:textAlignment="center"
-                android:text="Проблеммы со связью"
+                android:text="@string/noNetworkErrorHeader"
                 />
                 <Space
                     android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
                 android:fontFamily="@font/ys_display_bold"
                 android:textSize="22sp"
                 android:textAlignment="center"
-                android:text="Загрузка не удалась. Проверьте поделючение к интернету"
+                android:text="@string/noNetworkErrorDescription"
                 />
                 <Space
                     android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                     android:id="@+id/retrySearchButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Обновить"
+                    android:text="@string/refresh"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/fg_primary"
                     android:textColor="@color/bg_primary"

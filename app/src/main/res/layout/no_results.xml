@@ -23,7 +23,7 @@
             android:fontFamily="@font/ys_display_bold"
             android:textSize="22sp"
             android:textAlignment="center"
-            android:text="Ничего не нашлось!"
+            android:text="@string/searchResultEmpty"
             />
         <Space
             android:layout_width="wrap_content"

@@ -17,4 +17,10 @@
 
     <string name="youSearched">Вы искали</string>
     <string name="clearSearchHistory">Очистить историю</string>
+
+    <string name="searchResultEmpty">Ничего не нашлось</string>
+    <string name="refresh">Обновить</string>
+    <string name="noNetworkErrorDescription">Загрузка не удалась. Проверьте поделючение к интернету</string>
+    <string name="noNetworkErrorHeader">Проблемы со связью</string>
+
 </resources>
