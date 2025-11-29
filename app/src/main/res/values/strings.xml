@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Playlist Maker</string>
+    <string name="search">Поиск</string>
+    <string name="mediateka">Медиатека</string>
+    <string name="settings">Настройки</string>
+
+    <string name="dark_theme">Темная тема</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="support">Написать в поддержку</string>
+    <string name="licence">Пользовательское соглашение</string>
+
+    <string name="devEmail">fakepersons@yandex.ru</string>
+    <string name="emailSubjectPlaceholder">Сообщение разработчикам Playlist Maker</string>
+    <string name="contactDevsMsgPlaceholder">Работает!!</string>
+    <string name="myGroupName">ИС-221</string>
+    <string name="licenceLink">https://www.vivt.ru</string>
+
+    <string name="youSearched">Вы искали</string>
+    <string name="clearSearchHistory">Очистить историю</string>
+</resources>

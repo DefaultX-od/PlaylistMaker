@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_colored"
+    tools:context=".MainActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/Content"
+        >
+    <LinearLayout
+        style="@style/PageHeaderContainer"
+        android:layout_marginHorizontal="15dp">
+        <TextView
+            style="@style/PageHeaderText"
+            android:textColor="@color/fg_light"
+            android:text="@string/app_name"
+            />
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/searchButton"
+            style="@style/MainMenuButton"
+            android:text="@string/search"
+            app:icon="@drawable/serach_old" />
+
+        <Button
+            android:id="@+id/mediatekaButton"
+            style="@style/MainMenuButton"
+            android:text="@string/mediateka"
+            app:icon="@drawable/multimedia"
+             />
+        <Button
+            android:id="@+id/settingsButton"
+            style="@style/MainMenuButton"
+            android:text="@string/settings"
+            app:icon="@drawable/settings"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

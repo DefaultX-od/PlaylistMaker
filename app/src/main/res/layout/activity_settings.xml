@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <!-- App page -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top"
+        android:background="@color/bg_primary">
+
+        <!-- App page header -->
+        <LinearLayout style="@style/PageHeaderContainer">
+
+            <!-- Header button -->
+            <ImageButton
+                style="@style/PageHeaderButton"
+                android:src="@drawable/arrow_back"
+                android:id="@+id/backBtn"
+                />
+
+            <!-- Header Text -->
+            <TextView
+                style="@style/PageHeaderText"
+                android:text="@string/settings"/>
+        </LinearLayout>
+
+        <!-- Page content container vertical layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <!-- Option controller -->
+        <LinearLayout style="@style/ControlWrapper"
+            android:paddingHorizontal="7dp">
+            <TextView
+                style="@style/RegularText"
+                android:text="@string/dark_theme"
+                />
+            <Space style="@style/Spacer"/>
+            <Switch
+                android:id="@+id/isDarkModeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml"/>
+        </LinearLayout>
+            <LinearLayout style="@style/ControlWrapper">
+                <Button
+                    android:id="@+id/shareBtn"
+                    style="@style/ListButton"
+                    android:text="@string/share_app"
+                    app:icon="@drawable/share"/>
+            </LinearLayout>
+            <LinearLayout style="@style/ControlWrapper">
+                <Button
+                    style="@style/ListButton"
+                    android:id="@+id/supportBtn"
+                    android:text="@string/support"
+                    app:icon="@drawable/support"/>
+            </LinearLayout>
+            <LinearLayout style="@style/ControlWrapper">
+
+                <Button
+                    android:id="@+id/licenceBtn"
+                    style="@style/ListButton"
+                    android:text="@string/licence"
+                    app:icon="@drawable/arrow_right"/>
+        </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

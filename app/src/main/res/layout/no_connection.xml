@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView style="@style/NoInternetImageView"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/fg_primary"
+                android:fontFamily="@font/ys_display_bold"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:text="Проблеммы со связью"
+                />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/fg_primary"
+                android:fontFamily="@font/ys_display_bold"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:text="Загрузка не удалась. Проверьте поделючение к интернету"
+                />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"/>
+                <Button
+                    android:id="@+id/retrySearchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Обновить"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/fg_primary"
+                    android:textColor="@color/bg_primary"
+                    android:fontFamily="@font/ys_display_bold"
+                    android:paddingHorizontal="15dp"
+                    />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mediateka"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top"
+        android:background="@color/bg_primary">
+
+        <!-- App page header -->
+        <LinearLayout style="@style/PageHeaderContainer">
+
+            <!-- Header button -->
+            <ImageButton
+                style="@style/PageHeaderButton"
+                android:src="@drawable/arrow_back"
+                android:id="@+id/backBtn"
+                />
+
+            <!-- Header Text -->
+            <TextView
+                style="@style/PageHeaderText"
+                android:text="@string/mediateka"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
