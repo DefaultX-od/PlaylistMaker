@@ -149,5 +149,22 @@
         <item name="android:layout_gravity">center</item>
         <item name="srcCompat">@drawable/no_internet_light</item>
     </style>
+    <style name="ErrorTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/fg_primary</item>
+        <item name="android:fontFamily">@font/ys_display_bold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="SmallRoundButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:backgroundTint">@color/fg_primary</item>
+        <item name="android:textColor">@color/bg_primary</item>
+        <item name="android:fontFamily">@font/ys_display_bold</item>
+        <item name="android:paddingHorizontal">15dp</item>
+    </style>
 
 </resources>

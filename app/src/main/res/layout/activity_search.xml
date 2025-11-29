@@ -83,15 +83,8 @@
                 </androidx.recyclerview.widget.RecyclerView>
                 <Button
                     android:id="@+id/clearHistoryButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/clearSearchHistory"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/fg_primary"
-                    android:textColor="@color/bg_primary"
-                    android:fontFamily="@font/ys_display_bold"
-                    android:paddingHorizontal="15dp"
-                    >
+                    style="@style/SmallRoundButton">
                 </Button>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
