@@ -264,14 +264,14 @@ class SearchActivity : AppCompatActivity() {
                 notFoundWidget.visibility = View.GONE
                 noInternetWidget.visibility = View.GONE
                 if (!searchStr.isEmpty()) {
-                        searchHistoryWidget.visibility = View.GONE
-                        searchResultsRecycleView.visibility = View.VISIBLE
+                    searchHistoryWidget.visibility = View.GONE
+                    searchResultsRecycleView.visibility = View.VISIBLE
+                    searchTracks(searchStr, searchResultsRecycleView, sharedPrefs, notFoundWidget, noInternetWidget)
                     }
                 else{
                     searchHistoryWidget.visibility = View.VISIBLE
                     searchResultsRecycleView.visibility = View.GONE
                 }
-                searchTracks(searchStr, searchResultsRecycleView, sharedPrefs, notFoundWidget, noInternetWidget)
                 true
             }
             false
