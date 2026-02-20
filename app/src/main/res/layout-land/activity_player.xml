@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/player">
+
+    <LinearLayout
+        android:id="@+id/view_header"
+        style="@style/PageHeaderContainer"
+        >
+        <!-- Header button -->
+        <ImageButton
+            style="@style/PageHeaderButton"
+            android:src="@drawable/arrow_back"
+            android:id="@+id/backBtn"
+            />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/middleBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+    <androidx.cardview.widget.CardView style="@style/TrackCoverContainer"
+        android:id="@+id/track_cover_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+
+        app:layout_constraintTop_toBottomOf="@+id/view_header">
+        <ImageView
+            android:id="@+id/track_cover"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:scaleType="centerCrop"
+
+            app:srcCompat="@drawable/track_img_placeholder_background" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        style="@style/TrackName"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintEnd_toEndOf="@id/middleBorder"
+        android:layout_width="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/track_cover_container"
+        android:id="@+id/track_name"
+        android:layout_height="wrap_content"
+        android:text="Название Трека"
+        android:layout_marginVertical="10dp"
+        />
+    <TextView
+        style="@style/TrackName"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintEnd_toEndOf="@id/middleBorder"
+        android:layout_width="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/track_name"
+        android:id="@+id/track_author"
+        android:layout_height="wrap_content"
+        android:text="Автор трека"
+
+        />
+
+    <LinearLayout
+
+        android:id="@+id/track_controls"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/middleBorder"
+
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/SmallRoundButton"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:backgroundTint="@color/fg_tertiary"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/add_playlist"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconSize="24dp" />
+
+        <Space style="@style/Spacer" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/media_control_button"
+            style="@style/SmallRoundButton"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:backgroundTint="@color/fg_primary"
+            android:enabled="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:visibility="gone"
+            app:icon="@drawable/play"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconSize="32dp" />
+
+        <ProgressBar
+            android:id="@+id/trackLoadProgressBar"
+            android:layout_width="72dp"
+            android:layout_height="72dp" />
+
+        <Space style="@style/Spacer" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/favoriteButton"
+            style="@style/SmallRoundButton"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:backgroundTint="@color/fg_tertiary"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/like_inactive"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconSize="24dp" />
+    </LinearLayout>
+    <TextView
+        style="@style/TrackDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timer"
+        android:text="00:00"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintBottom_toTopOf="@+id/trackProgressBar"
+
+        />
+    <TextView
+        style="@style/TrackDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:30"
+        app:layout_constraintBottom_toTopOf="@+id/trackProgressBar"
+        app:layout_constraintEnd_toEndOf="@id/middleBorder"
+        />
+    <com.google.android.material.slider.Slider
+        android:id="@+id/trackProgressBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:labelFor="@id/leftBorder"
+        android:value="30000"
+        android:valueFrom="0"
+        android:layout_marginBottom="10dp"
+
+        android:valueTo="30000"
+        app:haloRadius="0dp"
+        app:labelBehavior="floating"
+
+        app:layout_constraintEnd_toEndOf="@id/middleBorder"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+
+        app:layout_constraintBottom_toTopOf="@+id/track_controls"
+        app:thumbRadius="0dp"
+        app:trackHeight="8dp" />
+
+<!--    <TextView-->
+<!--        style="@style/TrackName"-->
+<!--        android:id="@+id/timer"-->
+<!--        app:layout_constraintStart_toStartOf="@id/leftBorder"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/rightBorder"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="5dp"-->
+<!--        android:text="00:30"-->
+<!--        android:textAlignment="center"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/track_controls"-->
+
+<!--        />-->
+    <LinearLayout
+        app:layout_constraintStart_toStartOf="@id/middleBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/track_collection_view"
+        android:id="@+id/track_length_view"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:layout_marginVertical="10dp"
+        >
+
+        <TextView
+            style="@style/TrackDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/length"
+            android:textAlignment="center"
+            />
+        <Space style="@style/Spacer"/>
+        <TextView
+            style="@style/TrackName"
+            android:id="@+id/track_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:00"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        app:layout_constraintStart_toStartOf="@id/middleBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/track_year_view"
+        android:id="@+id/track_collection_view"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        >
+
+        <TextView
+            style="@style/TrackDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/collection"
+            android:textAlignment="center"
+            />
+        <Space style="@style/Spacer"/>
+        <TextView
+            style="@style/TrackName"
+            android:id="@+id/track_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        app:layout_constraintStart_toStartOf="@id/middleBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/track_genre_view"
+        android:id="@+id/track_year_view"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        >
+
+        <TextView
+            style="@style/TrackDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/year"
+            android:textAlignment="center"
+            />
+        <Space style="@style/Spacer"/>
+        <TextView
+            style="@style/TrackName"
+            android:id="@+id/track_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1971"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        app:layout_constraintStart_toStartOf="@id/middleBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/track_country_view"
+        android:id="@+id/track_genre_view"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        >
+
+        <TextView
+            style="@style/TrackDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/genre"
+            android:textAlignment="center"
+            />
+        <Space style="@style/Spacer"/>
+        <TextView
+            style="@style/TrackName"
+            android:id="@+id/track_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/track_country_view"
+        app:layout_constraintStart_toStartOf="@id/middleBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        >
+
+        <TextView
+            style="@style/TrackDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/country"
+            android:textAlignment="center"
+            />
+        <Space style="@style/Spacer"/>
+        <TextView
+            style="@style/TrackName"
+            android:id="@+id/track_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
