@@ -11,6 +11,7 @@
     <color name="fg_primary">@color/fg_dark</color>
     <color name="fg_secondary">#000000</color>
     <color name="fg_tertiary">#AEAFB4</color>
+    <color name="fg_inverted">@color/fg_light</color>
 
     <color name="selection_light_bg">#E9E8E8</color>
     <color name="selection">#E9E8E8</color>

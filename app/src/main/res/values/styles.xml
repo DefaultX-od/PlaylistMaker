@@ -157,7 +157,8 @@
         <item name="android:textSize">22sp</item>
         <item name="android:textAlignment">center</item>
     </style>
-    <style name="SmallRoundButton">
+    <style name="SmallRoundButton" parent="Widget.Material3.Button.UnelevatedButton">
+        <item name="iconTint">@color/fg_inverted</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
@@ -166,5 +167,19 @@
         <item name="android:fontFamily">@font/ys_display_bold</item>
         <item name="android:paddingHorizontal">15dp</item>
     </style>
+    <style name="CustomTabTextAppearance" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/ys_display_light</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="CustomTabBar" parent="Widget.Material3.TabLayout">
+        <item name="tabBackground">@color/bg_primary</item>
+        <item name="tabIndicatorColor">@color/fg_primary</item>
+        <item name="tabTextColor">@color/fg_primary</item>
+        <item name="tabSelectedTextColor">@color/fg_primary</item>
+        <item name="tabIndicatorFullWidth">true</item>
+        <item name="tabTextAppearance">@style/CustomTabTextAppearance</item>
+    </style>
+
 
 </resources>

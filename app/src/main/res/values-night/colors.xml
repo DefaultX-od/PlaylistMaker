@@ -10,6 +10,7 @@
     <color name="fg_primary">@color/fg_light</color>
     <color name="fg_secondary">@color/fg_light</color>
     <color name="fg_tertiary">@color/fg_light</color>
+    <color name="fg_inverted">@color/fg_dark</color>
 
     <color name="selection_light_bg">#E9E8E8</color>
     <color name="selection">#2A2A2A</color>

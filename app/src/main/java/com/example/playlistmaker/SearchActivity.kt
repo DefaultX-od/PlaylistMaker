@@ -2,8 +2,10 @@ package com.example.playlistmaker
 
 import com.google.gson.Gson
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -31,8 +33,33 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import java.lang.reflect.Type
+import android.os.Handler
+import android.widget.ProgressBar
 
 class SearchActivity : AppCompatActivity() {
+
+    companion object{
+        const val SEARCH_QUERY = "SEARCH_QUERY"
+        const val QUERY_VAL = ""
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+    }
+
+    private var searchHistoryEmpty = false
+
+    private var isClickAllowed = true
+    private val handler = Handler(Looper.getMainLooper())
+
+    private fun clickDebounce(): Boolean{
+        val current = isClickAllowed
+        if(isClickAllowed){
+            isClickAllowed = false
+
+            handler.postDelayed({isClickAllowed=true}, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
+
     val SEARCH_HISTORY_PREFERENCE = "search_history_preference"
     val HISTORY_TRACK_KEY_3 = "key_for_history_track3"
     val gson = com.google.gson.Gson()
@@ -68,7 +95,7 @@ class SearchActivity : AppCompatActivity() {
         }
         trackList.add(0, trackStr)
         if (trackList.size > maxLength) {
-            trackList.removeAt(9)// Удаляем самый старый (последний) элемент
+            trackList.removeAt(9)
         }
         val finalJsonToSave = gson.toJson(trackList)
         sharedPrefs.edit {
@@ -80,7 +107,20 @@ class SearchActivity : AppCompatActivity() {
         }
 
         val searchHistoryRecycleView = findViewById<RecyclerView>(R.id.searchHistoryList)
-        searchHistoryRecycleView.adapter = TrackListItemAdapter(tracks =tracks){ track -> null
+        searchHistoryRecycleView.adapter = TrackListItemAdapter(tracks =tracks){track -> null
+            if(clickDebounce()) {
+                if (tracks.isNotEmpty()){
+                    searchHistoryEmpty = false
+                }
+                else{
+                    searchHistoryEmpty = true
+                }
+                val trackJson = Gson().toJson(track)
+                val intent = Intent(this, PlayerActivity::class.java).apply {
+                    putExtra("EXTRA_TRACK_JSON", trackJson)
+                }
+                startActivity(intent)
+            }
         }
     }
 
@@ -98,7 +138,14 @@ class SearchActivity : AppCompatActivity() {
     private fun updateSearchRecycler(tracks: List<Track>, recycler: RecyclerView, sharedPrefs: SharedPreferences, notFoundWidget: ConstraintLayout){
         if(tracks.isNotEmpty()) {
             recycler.adapter = TrackListItemAdapter(tracks = tracks) { track ->
-                saveSearchHistory(track, sharedPrefs)
+                if (clickDebounce()) {
+                    saveSearchHistory(track, sharedPrefs)
+                    val trackJson = Gson().toJson(track)
+                    val intent = Intent(this, PlayerActivity::class.java).apply {
+                        putExtra("EXTRA_TRACK_JSON", trackJson)
+                    }
+                    startActivity(intent)
+                }
             }
         }
         else{
@@ -106,12 +153,18 @@ class SearchActivity : AppCompatActivity() {
         }
     }
     private fun searchTracks(query: String, recycler: RecyclerView, sharedPrefs: SharedPreferences, notFoundWidget: ConstraintLayout, noConnectionWidget: ConstraintLayout){
+        val spinner = findViewById<ProgressBar>(R.id.searchProgressIndicator)
+        recycler.visibility = View.VISIBLE
+        recycler.adapter = TrackListItemAdapter(tracks = emptyList()){track ->null}
+        spinner.visibility = View.VISIBLE
+
         itunesApiService.getTracks(searchStr).enqueue(object : Callback<ItunesResponse>{
             override fun onResponse(call: Call<ItunesResponse>, response: Response<ItunesResponse>) {
-                // Получили ответ от сервера
+
                 if (response.isSuccessful) {
+                    spinner.visibility = View.GONE
                     val itunesResponse = response.body()
-                    // Наш запрос был удачным, получаем наши объекты
+
                     if (itunesResponse != null) {
 
                         val foundTracks: List<Track> = itunesResponse.results
@@ -120,28 +173,22 @@ class SearchActivity : AppCompatActivity() {
                     Log.v("tracks", "Search ended success!!!")
 
                 } else {
-                    // Сервер отклонил наш запрос с ошибкой
                     val errorJson = response.errorBody()?.string()
                     Log.v("tracks", errorJson.toString())
                 }
             }
             override fun onFailure(call: Call<ItunesResponse>, t: Throwable) {
+                spinner.visibility = View.GONE
                 noConnectionWidget.visibility = View.VISIBLE
-                // Не смогли присоединиться к серверу
-                // Выводим ошибку в лог, что-то пошло не так
                 t.printStackTrace()
                 Log.v("tracks", t.toString())
             }
         }
         )
-//        Log.v("tracks", "Я нашел и преобразовал эти треки, перед возвращением: ${found.toString()}")
     }
 
     private var searchStr: String = QUERY_VAL
-    companion object{
-        const val SEARCH_QUERY = "SEARCH_QUERY"
-        const val QUERY_VAL = ""
-    }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -174,21 +221,42 @@ class SearchActivity : AppCompatActivity() {
         val clearHistoryButton = findViewById<Button>(R.id.clearHistoryButton)
         val searchHistoryWidget = findViewById<LinearLayout>(R.id.searchHistoryWidget)
 
+        val searchRunnable = Runnable {
+            val query = searchStr
+            if (query.isNotEmpty()) {
+                searchTracks(query, searchResultsRecycleView, sharedPrefs, notFoundWidget, noInternetWidget)
+            }
+        }
+
+        fun searchDebounce(){
+            handler.removeCallbacks(searchRunnable)
+            handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+        }
+
+
         val textWatcher = object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                searchFieldClearButton.visibility = searchFieldClearButtonVisibility(s)
+                searchStr = s.toString()
+                searchFieldClearButton.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+                searchHistoryWidget.visibility = View.GONE
+
+                if (!s.isNullOrEmpty()) {
+                    searchDebounce()
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
                 searchStr = s.toString()
                 if(searchStr.isEmpty()){
-                    searchHistoryWidget.visibility = View.VISIBLE
                     searchResultsRecycleView.visibility = View.GONE
                     notFoundWidget.visibility = View.GONE
+                    if(!searchHistoryEmpty) {
+                        searchHistoryWidget.visibility = View.VISIBLE
+                    }
                 }
             }
 
@@ -197,6 +265,13 @@ class SearchActivity : AppCompatActivity() {
         searchHistoryRecycleView.layoutManager = LinearLayoutManager(this)
         searchHistoryRecycleView.adapter = TrackListItemAdapter(tracks = findTracksById(sharedPrefs)){
             track -> null
+            if(clickDebounce()) {
+                val trackJson = Gson().toJson(track)
+                val intent = Intent(this, PlayerActivity::class.java).apply {
+                    putExtra("EXTRA_TRACK_JSON", trackJson)
+                }
+                startActivity(intent)
+            }
         }
 
         searchResultsRecycleView.layoutManager = LinearLayoutManager(this)
@@ -276,6 +351,7 @@ class SearchActivity : AppCompatActivity() {
             }
             false
         }
+
     }
 
     private fun searchFieldClearButtonVisibility(s: CharSequence?): Int{

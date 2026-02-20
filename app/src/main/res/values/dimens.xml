@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mtrl_slider_track_side_padding">2dp</dimen>
+    <dimen name="mtrl_slider_track_">2dp</dimen>
+    <dimen name="mtrl_slider_widget_height">20dp</dimen>
+</resources>
