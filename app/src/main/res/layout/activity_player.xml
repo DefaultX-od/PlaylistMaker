@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,9 +13,7 @@
 
     <LinearLayout
         android:id="@+id/view_header"
-        style="@style/PageHeaderContainer"
-        >
-        <!-- Header button -->
+        style="@style/PageHeaderContainer">
         <ImageButton
             style="@style/PageHeaderButton"
             android:src="@drawable/arrow_back"
@@ -59,7 +62,6 @@
         app:layout_constraintTop_toBottomOf="@+id/track_cover_container"
         android:id="@+id/track_name"
         android:layout_height="wrap_content"
-        android:text="Название Трека"
         android:layout_marginVertical="10dp"
         />
     <TextView
@@ -70,8 +72,6 @@
         app:layout_constraintTop_toBottomOf="@+id/track_name"
         android:id="@+id/track_author"
         android:layout_height="wrap_content"
-        android:text="Автор трека"
-
         />
     <LinearLayout
 
@@ -79,12 +79,12 @@
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
         android:layout_width="0dp"
         app:layout_constraintBottom_toTopOf="@+id/track_length_view"
-
         android:id="@+id/track_controls"
         android:layout_height="wrap_content"
         >
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/addToPlaylistButton"
             style="@style/SmallRoundButton"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -138,18 +138,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/timer"
-        android:text="00:00"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintBottom_toTopOf="@+id/trackProgressBar"
+        android:text="00:00"
 
         />
     <TextView
         style="@style/TrackDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:30"
         app:layout_constraintBottom_toTopOf="@+id/trackProgressBar"
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        android:text="00:30"
         />
     <com.google.android.material.slider.Slider
         android:id="@+id/trackProgressBar"
@@ -208,7 +208,6 @@
             android:id="@+id/track_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0:00"
             android:textAlignment="center"
             />
     </LinearLayout>
@@ -235,7 +234,6 @@
             android:id="@+id/track_collection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."
             android:textAlignment="center"
             />
     </LinearLayout>
@@ -262,7 +260,6 @@
             android:id="@+id/track_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1971"
             android:textAlignment="center"
             />
     </LinearLayout>
@@ -289,7 +286,6 @@
             android:id="@+id/track_genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."
             android:textAlignment="center"
             />
     </LinearLayout>
@@ -316,9 +312,49 @@
             android:id="@+id/track_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."
             android:textAlignment="center"
             />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/playlists_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_sheet_background"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="500dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:textSize="18sp"
+            android:text="@string/addToPlaylist"
+            style="@style/TrackName" />
+        <Button
+            android:id="@+id/createNewPlaylistButton"
+            style="@style/SmallRoundButton"
+            android:text="@string/newPlaylist" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/playlistsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"/>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

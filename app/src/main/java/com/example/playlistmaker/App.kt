@@ -7,7 +7,7 @@ class App : Application() {
 
     val database : Database by lazy {
         Room.databaseBuilder(this, Database::class.java, "database.db")
-            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration(true)
             .build()
     }
 

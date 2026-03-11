@@ -14,7 +14,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-
     val SETINGS_PREFERENCES = "user_settings_preferences"
     val DARKMODE_ENABLE_KEY = "key_for_darkmode"
 

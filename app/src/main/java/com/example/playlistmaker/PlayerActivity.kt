@@ -1,5 +1,7 @@
 package com.example.playlistmaker
 
+import android.app.Activity
+import android.content.Intent
 import android.media.MediaPlayer
 import com.google.gson.Gson
 
@@ -10,15 +12,21 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.Button
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import kotlinx.coroutines.Runnable
@@ -31,15 +39,46 @@ class PlayerActivity : AppCompatActivity() {
     private var isFavorite = false
     private val trackMapper = TrackMapper()
     private val favoriteTrackDao by lazy { (applicationContext as App).database.favoriteTrackDao() }
+    private val playlistDao by lazy { (applicationContext as App).database.playlistDao()}
     private val json by lazy {  intent.getStringExtra("EXTRA_TRACK_JSON") }
     private val track by lazy{ Gson().fromJson(json, Track::class.java) }
     private val mediaPlayer = MediaPlayer()
+    private val overlay by lazy { findViewById<View>(R.id.overlay) }
+    private val bottomSheetContainer by lazy { findViewById<LinearLayout>(R.id.playlists_bottom_sheet) }
+    private val bottomSheetBehavior by lazy {
+        BottomSheetBehavior.from<LinearLayout>(
+            bottomSheetContainer
+        )
+    }
+
+    private val playlistCreationLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if(result.resultCode == Activity.RESULT_OK){
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+    }
     companion object{
         private const val STATE_DEFAULT = 0
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
         private const val TIMER_UPDATE_DEBOUNCE_DELAY = 500L
+    }
+
+    private fun addTrackToPlaylist(playlistId: Int, playlistName: String){
+        val trackPlaylistEntity = trackMapper.mapToPlaylistEntity(track, playlistId)
+
+        lifecycleScope.launch {
+            val res = playlistDao.insertTrack(trackPlaylistEntity)
+            if(res == -1L){
+                Toast.makeText(this@PlayerActivity, "${getString(R.string.trackAlreadyInPlaylist)} \"${playlistName}\".", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this@PlayerActivity, "${getString(R.string.addedToPlaylist)} \"${playlistName}\".", Toast.LENGTH_SHORT).show()
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                updatePlaylistList()
+            }
+
+        }
+
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -55,6 +94,18 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    private fun updatePlaylistList(){
+        val playlistList = findViewById<RecyclerView>(R.id.playlistsList)
+        playlistList.layoutManager = LinearLayoutManager(this)
+
+        lifecycleScope.launch {
+            val playlists = playlistDao.getPlaylists()
+            playlistList?.adapter = PlaylistListItemAdapter (playlists = playlists){
+                    playlist -> addTrackToPlaylist(playlist.playlist.playlistId, playlist.playlist.name)
+            }
+        }
+    }
+
     private var playerState = STATE_DEFAULT
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,10 +113,39 @@ class PlayerActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_player)
 
+        updatePlaylistList()
+
+        val createNewPlaylistButton = findViewById<Button>(R.id.createNewPlaylistButton)
+
+        createNewPlaylistButton.setOnClickListener {
+            val trackJson = Gson().toJson(track)
+            val intent = Intent(this, PlaylistCreation::class.java).apply {
+                putExtra("EXTRA_TRACK_JSON", trackJson)
+            }
+            playlistCreationLauncher.launch(intent)
+        }
+
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        val addToPlaylistButton = findViewById<MaterialButton>(R.id.addToPlaylistButton)
+        addToPlaylistButton.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                overlay.visibility = if (newState == BottomSheetBehavior.STATE_HIDDEN) View.GONE else View.VISIBLE
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                overlay.alpha = slideOffset + 1f
+            }
+        })
+
         lifecycleScope.launch {
             isFavorite = favoriteTrackDao.isFavorite(track.trackId)
             updateFavoriteButton()
         }
+
 
         findViewById<TextView>(R.id.track_name).text = track.trackName
         findViewById<TextView>(R.id.track_author).text = track.artistName
@@ -120,7 +200,7 @@ class PlayerActivity : AppCompatActivity() {
 
             trackProgressBar.value = 30000.toFloat()
             playerState = STATE_PREPARED
-            handler.removeCallbacks(progressRunnable) // Стоп таймер
+            handler.removeCallbacks(progressRunnable)
             timer.text = "00:00"
         }
 
@@ -129,6 +209,11 @@ class PlayerActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updatePlaylistList()
     }
 
     override fun onDestroy() {

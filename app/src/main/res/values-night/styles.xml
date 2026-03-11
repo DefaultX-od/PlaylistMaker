@@ -127,6 +127,7 @@
     <style name="TrackCoverMedium">
         <item name="android:layout_height">70dp</item>
         <item name="android:layout_width">70dp</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
     <style name="TrackCoverContainer" parent="CardView">
         <item name="cardCornerRadius">6dp</item>
@@ -153,5 +154,17 @@
         <item name="android:fontFamily">@font/ys_display_bold</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="ButtonColoredFullLength">
+        <item name="cornerRadius">5dp</item>
+        <item name="android:backgroundTint">@color/bg_light</item>
+        <item name="android:textColor">@color/fg_inverted</item>
+    </style>
+    <style name="CustomOutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/fg_light</item>
+        <item name="boxStrokeColor">@color/bg_light</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
     </style>
 </resources>

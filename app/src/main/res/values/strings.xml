@@ -23,15 +23,32 @@
     <string name="noNetworkErrorDescription">Загрузка не удалась. Проверьте поделючение к интернету</string>
     <string name="noNetworkErrorHeader">Проблемы со связью</string>
 
+    <string name="trackName">Название трека</string>
+
     <string name="collection">Альбом</string>
     <string name="length">Длительность</string>
     <string name="year">Год</string>
     <string name="genre">Жанр</string>
     <string name="country">Страна</string>
 
+
+
     <string name="favoritesTab">Избранные треки</string>
     <string name="playlistsTab">Плейлисты</string>
     <string name="favoritesEmpty">Ваша медиатека пуста</string>
+    <string name="playlistsEmpty">Вы не создали ни\nодного плейлиста</string>
+    <string name="playlistEmpty">Вы еще не добавили\nни один трек</string>
+    <string name="addToPlaylist">Добавить в плейлист</string>
+    <string name="newPlaylist">Новый плейлист</string>
+    <string name="addedToPlaylist">Добавлено в плейлист</string>
+    <string name="trackAlreadyInPlaylist">Трек уже был добавлен в плейлист</string>
+    <string name="playlist">Плейлист</string>
+    <string name="wasCreated">был создан</string>
+    <string name="tracks">треков</string>
+
+    <string name="create">Создать</string>
+    <string name="description">Описание</string>
+    <string name="name">Название*</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

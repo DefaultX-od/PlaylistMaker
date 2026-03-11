@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout style="@style/TrackListItem"
+        android:paddingHorizontal="2dp"
+        >
+<!--        Фото трека-->
+        <androidx.cardview.widget.CardView style="@style/TrackCoverContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <ImageView android:id="@+id/playlistImgView" style="@style/TrackCoverMedium"/>
+        </androidx.cardview.widget.CardView>
+
+<!--        Текст трека-->
+        <LinearLayout style="@style/ListItemDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView android:id="@+id/playlistNameView" style="@style/TrackName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView android:id="@+id/trackCountView" style="@style/TrackDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    style="@style/TrackDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "@string/tracks"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,9 +16,9 @@ class TrackListItemAdapter(
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val item = tracks[position]
-        holder.bind(tracks[position])
+        holder.bind(item)
         holder.itemView.setOnClickListener {
-            onClick(tracks[position])
+            onClick(item)
         }
     }
 
